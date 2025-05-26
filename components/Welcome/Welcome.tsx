@@ -1,41 +1,41 @@
 'use client';
 
 import Link from 'next/link';
-import {  IconCode, IconHammer  } from '@tabler/icons-react';
-import { Button, Text, Title, Container, Group, Stack, Box, Code, Flex } from '@mantine/core';
+import { IconCode, IconHammer } from '@tabler/icons-react';
+import { Box, Button, Code, Container, Flex, Group, Stack, Text, Title } from '@mantine/core';
 
 const features = [
-  "Code Generation",
-  "AI-Powered",
-  "Template Library",
-  "Real-time Collaboration",
-  "Version Control",
-  "Custom Workflows",
-  "Smart Suggestions",
-  "Multi-Language",
-  "Code Generation",
-  "AI-Powered",
-  "Template Library",
-  "Real-time Collaboration",
-]
+  'Code Generation',
+  'AI-Powered',
+  'Template Library',
+  'Real-time Collaboration',
+  'Version Control',
+  'Custom Workflows',
+  'Smart Suggestions',
+  'Multi-Language',
+  'Code Generation',
+  'AI-Powered',
+  'Template Library',
+  'Real-time Collaboration',
+];
 
 export function LandingPage() {
   return (
     <Box
       style={{
-        minHeight: "95vh",
-        background: "linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)",
-        position: "relative",
-        overflow: "hidden",
+        minHeight: '95vh',
+        background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <Container size="xl" py={80} my={80}>
-        <Flex direction={{ base: "column", md: "row" }} align="center" gap={60}>
+        <Flex direction={{ base: 'column', md: 'row' }} align="center" gap={60}>
           <Box flex={1}>
             <Stack gap="xl">
               <Text size="lg" c="dark" lh={1.4} maw={500}>
-                AI-powered development platform with intelligent code generation, collaborative workflows, and
-                enterprise-grade tooling for modern development teams
+                AI-powered development platform with intelligent code generation, collaborative
+                workflows, and enterprise-grade tooling for modern development teams
               </Text>
 
               <Box>
@@ -49,7 +49,7 @@ export function LandingPage() {
                   c="dark"
                   style={{
                     lineHeight: 0.8,
-                    letterSpacing: "-0.02em",
+                    letterSpacing: '-0.02em',
                   }}
                 >
                   CodeCraft
@@ -64,8 +64,8 @@ export function LandingPage() {
                   fw={600}
                   leftSection={<IconCode size={20} />}
                   style={{
-                    border: "2px solid #000",
-                    borderRadius: "25px",
+                    border: '2px solid #000',
+                    borderRadius: '25px',
                   }}
                 >
                   <Link href="/docs">Start Building</Link>
@@ -76,10 +76,10 @@ export function LandingPage() {
                   color="dark"
                   fw={600}
                   style={{
-                    borderRadius: "25px",
+                    borderRadius: '25px',
                   }}
                 >
-                  Watch Demo
+                  Source Code
                 </Button>
               </Group>
 
@@ -87,71 +87,72 @@ export function LandingPage() {
                 block
                 p="md"
                 style={{
-                  background: "rgba(0, 0, 0, 0.8)",
-                  color: "#ffd700",
-                  borderRadius: "8px",
-                  fontFamily: "Monaco, Consolas, monospace",
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  color: '#ffd700',
+                  borderRadius: '8px',
+                  fontFamily: 'Monaco, Consolas, monospace',
                 }}
               >
-                $ npx create-codecraft-app my-project
+                $ npx learn-coding data-structures
               </Code>
             </Stack>
           </Box>
 
-          <Box flex={1} style={{ textAlign: "center" }}>
+          <Box flex={1} style={{ textAlign: 'center' }}>
             <Box
               style={{
-                width: "400px",
-                height: "400px",
-                margin: "0 auto",
-                position: "relative",
+                width: '400px',
+                height: '400px',
+                margin: '0 auto',
+                position: 'relative',
               }}
             >
               <Box
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  background: "linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)",
-                  borderRadius: "20px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "3px solid rgba(0, 0, 0, 0.1)",
-                  backdropFilter: "blur(10px)",
-                  position: "relative",
-                  overflow: "hidden",
+                  width: '100%',
+                  height: '100%',
+                  background:
+                    'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                  borderRadius: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '3px solid rgba(0, 0, 0, 0.1)',
+                  backdropFilter: 'blur(10px)',
+                  position: 'relative',
+                  overflow: 'hidden',
                 }}
               >
                 <Box
                   style={{
-                    position: "absolute",
-                    top: "20px",
-                    left: "20px",
-                    background: "rgba(0, 0, 0, 0.8)",
-                    color: "#ffd700",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                    fontFamily: "monospace",
-                    transform: "rotate(-10deg)",
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    color: '#ffd700',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    fontFamily: 'monospace',
+                    transform: 'rotate(-10deg)',
                   }}
                 >
-                  {"<Component />"}
+                  {'<Component />'}
                 </Box>
 
                 <Box
                   style={{
-                    position: "absolute",
-                    top: "60px",
-                    right: "30px",
-                    background: "rgba(0, 0, 0, 0.8)",
-                    color: "#ffd700",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                    fontFamily: "monospace",
-                    transform: "rotate(15deg)",
+                    position: 'absolute',
+                    top: '60px',
+                    right: '30px',
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    color: '#ffd700',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    fontFamily: 'monospace',
+                    transform: 'rotate(15deg)',
                   }}
                 >
                   "const ai = true"
@@ -159,34 +160,34 @@ export function LandingPage() {
 
                 <Box
                   style={{
-                    position: "absolute",
-                    bottom: "40px",
-                    left: "40px",
-                    background: "rgba(0, 0, 0, 0.8)",
-                    color: "#ffd700",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                    fontFamily: "monospace",
-                    transform: "rotate(8deg)",
+                    position: 'absolute',
+                    bottom: '40px',
+                    left: '40px',
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    color: '#ffd700',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    fontFamily: 'monospace',
+                    transform: 'rotate(8deg)',
                   }}
                 >
-                  {"function() {}"}
+                  {'function() {}'}
                 </Box>
 
                 {/* Central Icon */}
                 <Box
                   style={{
-                    width: "120px",
-                    height: "120px",
-                    background: "linear-gradient(135deg, #000 0%, #333 100%)",
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#ffd700",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
-                    marginBottom: "20px",
+                    width: '120px',
+                    height: '120px',
+                    background: 'linear-gradient(135deg, #000 0%, #333 100%)',
+                    borderRadius: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffd700',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                    marginBottom: '20px',
                   }}
                 >
                   <IconHammer size={60} />
@@ -201,25 +202,24 @@ export function LandingPage() {
         </Flex>
       </Container>
 
-
       <Box
         style={{
-          position: "absolute",
+          position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          background: "#000",
-          color: "#fff",
-          padding: "16px 0",
-          overflow: "hidden",
+          background: '#000',
+          color: '#fff',
+          padding: '16px 0',
+          overflow: 'hidden',
         }}
       >
         <Box
           style={{
-            display: "flex",
-            gap: "40px",
-            animation: "scroll 30s linear infinite",
-            whiteSpace: "nowrap",
+            display: 'flex',
+            gap: '40px',
+            animation: 'scroll 30s linear infinite',
+            whiteSpace: 'nowrap',
           }}
         >
           {[...features, ...features].map((feature, index) => (
@@ -246,6 +246,5 @@ export function LandingPage() {
         }
       `}</style>
     </Box>
-  )
+  );
 }
-

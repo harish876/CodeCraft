@@ -22,72 +22,21 @@ const EXAMPLE_TEMPLATES = [
       """
         Instructions
       """
-    `
+    `,
   },
   {
     value: 'stack',
     label: 'Stack Data Structure',
-    code: `"""
-Example: Simple Stack Data Structure
-"""
-class Stack:
-    def __init__(self):
-        self.items = []
-
-    def is_empty(self):
-        return len(self.items) == 0
-
-    def push(self, item):
-        self.items.append(item)
-        print(f"Pushed: {item}")
-
-    def pop(self):
-        if self.is_empty():
-            print("Stack is empty! Cannot pop.")
-            return None
-        return self.items.pop()
-
-    def peek(self):
-        if self.is_empty():
-            print("Stack is empty! Cannot peek.")
-            return None
-        return self.items[-1]
-
-    def size(self):
-        return len(self.items)
-
-    def display(self):
-        print("Stack (top to bottom):", list(reversed(self.items)))
-
-# Stack usage runs directly
-stack = Stack()
-
-# Push items
-stack.push(10)
-stack.push(20)
-stack.push(30)
-stack.display()
-
-# Peek at top
-print("Top item:", stack.peek())
-
-# Pop item
-print("Popped item:", stack.pop())
-stack.display()
-
-# Check size
-print("Current size:", stack.size())
-
-# Pop all
-stack.pop()
-stack.pop()
-stack.pop()  # Attempting to pop from empty stack
+    code: `
+      """
+        Solution
+      """
 `,
   },
 ];
 
 export function PythonPlayground({ templates }) {
-  const codeTemplates = templates && Array.isArray(templates) ? templates : EXAMPLE_TEMPLATES
+  const codeTemplates = templates && Array.isArray(templates) ? templates : EXAMPLE_TEMPLATES;
   const [code, setCode] = useState(codeTemplates[0].code);
   const [output, setOutput] = useState<string[]>(['Initializing Python environment...']);
   const [isLoading, setIsLoading] = useState(true);
@@ -150,7 +99,7 @@ export function PythonPlayground({ templates }) {
 async def __run():
 ${code
   .split('\n')
-  .map((line) => `    ${line}`)
+  .map((line: string) => `    ${line}`)
   .join('\n')}
 
 import asyncio
@@ -188,9 +137,9 @@ loop.run_until_complete(__run())
             <Select
               size="xs"
               placeholder="Load example"
-              data={EXAMPLE_TEMPLATES}
+              data={codeTemplates}
               onChange={(value) =>
-                value && setCode(EXAMPLE_TEMPLATES.find((t) => t.value === value)?.code || '')
+                value && setCode(codeTemplates.find((t) => t.value === value)?.code || '')
               }
               leftSection={<IconTemplate size={14} />}
             />

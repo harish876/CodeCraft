@@ -1,105 +1,25 @@
-# Understanding Data Structures: A Journey Through Code Organization
+# Introduction - CodeCraft Platform
 
-## Why Data Structures Matter
+Welcome, if this is your first tim at CodeCraft. This is a simple website to learn the basics of data structures, algorithms and advance your computer science journey.
+This serves as a platform to gradually start from basic data structures and eventually reach more complex concepts as you move through your college career.
 
-Imagine you're building a library. You could throw all the books in a pile, but finding a specific book would be a nightmare. This is exactly why we need data structures in programming - they help us organize and access data efficiently.
+## How to use CodeCraft
 
-## The Data Structure Decision Flowchart
+I built this platform so that you can track your progression from a novice CS student to a person who has identified their interest. These concepts in my opinion are the gateway to understanding anything and more importantly foundational for getting a job, doing [leetcode](https://leetcode.com/) and the whole nine yards.
+So what should you focus on when everything seems vast, AI seemingly does everything you want to.
 
-```mermaid
-graph TD
-    A[Start: Need to Store Data] --> B{What's the primary operation?}
-    B -->|Fast Access| C[Array/Hash Table]
-    B -->|Dynamic Size| D[Linked List]
-    B -->|Ordered Data| E[Tree]
-    B -->|Network Relationships| F[Graph]
-    
-    C --> G{Need Key-Value?}
-    G -->|Yes| H[Hash Table]
-    G -->|No| I[Array]
-    
-    D --> J{Need Random Access?}
-    J -->|Yes| K[Skip List]
-    J -->|No| L[Linked List]
-    
-    E --> M{Need Balanced?}
-    M -->|Yes| N[AVL/Red-Black Tree]
-    M -->|No| O[Binary Search Tree]
-    
-    F --> P{Need Weights?}
-    P -->|Yes| Q[Weighted Graph]
-    P -->|No| R[Unweighted Graph]
-```
+- **Focus on the fundamentals**: Pick a coding language and build reps.
+- Use CodeCraft as a hub to establish a **Mental Model** of all data structures you need in your back pocket.
+- CodeCraft is just a **introduction** and a window into these concepts.
+- Practice these questions, explore concepts in depth.
+- Setup an **IDE**, or Integrated Development Environment to build off small examples and eventuall great software.
 
-## Common Data Structures and Their Use Cases
+## Setting up an IDE
 
-### 1. Arrays
-- **Best for**: Fixed-size collections with random access
-- **Example**: Storing student grades in a class
-- **Time Complexity**: O(1) for access, O(n) for insertion/deletion
-
-### 2. Linked Lists
-- **Best for**: Dynamic collections with frequent insertions/deletions
-- **Example**: Implementing an undo feature in a text editor
-- **Time Complexity**: O(1) for insertion/deletion, O(n) for access
-
-### 3. Hash Tables
-- **Best for**: Key-value storage with fast lookups
-- **Example**: User authentication system
-- **Time Complexity**: O(1) average case for all operations
-
-### 4. Trees
-- **Best for**: Hierarchical data and sorted collections
-- **Example**: File system organization
-- **Time Complexity**: O(log n) for balanced trees
-
-### 5. Graphs
-- **Best for**: Network relationships and path finding
-- **Example**: Social network connections
-- **Time Complexity**: Varies based on implementation
-
-## Real-World Applications
-
-### Social Media Platforms
-- **Graphs**: Represent user connections
-- **Hash Tables**: Store user profiles
-- **Trees**: Organize comments and replies
-
-### E-commerce Websites
-- **Arrays**: Product listings
-- **Hash Tables**: Shopping cart
-- **Trees**: Category navigation
-
-### Operating Systems
-- **Linked Lists**: Process scheduling
-- **Trees**: File system
-- **Hash Tables**: Memory management
-
-## Performance Considerations
-
-When choosing a data structure, consider:
-1. **Access Patterns**: How will you access the data?
-2. **Memory Usage**: How much space do you need?
-3. **Operation Frequency**: Which operations are most common?
-4. **Data Size**: How much data will you store?
-
-## Best Practices
-
-1. **Start Simple**: Begin with basic structures (arrays, lists)
-2. **Profile First**: Measure performance before optimizing
-3. **Consider Trade-offs**: Every structure has pros and cons
-4. **Think Scalability**: Will your choice work with more data?
-
-## Common Pitfalls to Avoid
-
-1. Using arrays for frequent insertions/deletions
-2. Choosing complex structures when simple ones suffice
-3. Ignoring memory constraints
-4. Not considering worst-case scenarios
-
-## Next Steps
+## Chapters
 
 Ready to dive deeper? Check out our:
+
 - [Stack Data Structure Guide](/docs/stack)
 
-Remember: The best data structure is the one that solves your specific problem efficiently. Don't overcomplicate things - start simple and optimize when needed. 
+Remember: The best data structure is the one that solves your specific problem efficiently. Don't overcomplicate things - start simple and optimize when needed.

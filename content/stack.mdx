@@ -1,31 +1,69 @@
-import { PythonPlayground } from '@/components/PythonPlayground'
+import { PythonPlayground } from '@/components/PythonPlayground';
+import { STACK_CODE_TEMPLATES } from '../app/lib/constants';
 
 # Stack Data Structure
 
-The ResilientDB Python SDK provides a simple and intuitive way to interact with ResilientDB using Python. This SDK allows you to perform various operations such as creating transactions, querying the blockchain, and managing smart contracts.
+## What is a Stack?
+
+A stack is a fundamental data structure that follows the Last-In-First-Out (LIFO) principle. Think of it like a stack of plates - you can only add or remove plates from the top. The last plate you put on (push) will be the first one you take off (pop).
+
+## Key Operations
+
+- **Push**: Add an element to the top of the stack
+- **Pop**: Remove the top element from the stack
+- **Peek/Top**: View the top element without removing it
+- **isEmpty**: Check if the stack is empty
+
+## Brief Introduction
+
+To get a deep understanding of stacks, watch this excellent NeetCode video:
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/KcT3aVgrrpU"
+  title="Stack Data Structure"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+## Common Use Cases
+
+1. **Function Call Stack**: Managing function calls and their local variables
+2. **Undo/Redo Operations**: Tracking history of actions in applications
+3. **Browser History**: Managing back/forward navigation
+4. **Expression Evaluation**: Parsing and evaluating mathematical expressions
+5. **Valid Parentheses**: Checking for balanced brackets in code
 
 ## Interactive Playground
 
-Try out Python code directly in your browser! The playground below lets you experiment with Python code and see the results in real-time.
+Try implementing a stack in Python! The playground below provides a template where you can code your own stack implementation. You'll learn by doing!
 
-<PythonPlayground/>
+<PythonPlayground templates={STACK_CODE_TEMPLATES} />
 
-### Available API Endpoints
+## Time Complexity
 
-The ResilientDB Python SDK provides the following operations:
+| Operation | Time Complexity |
+| --------- | --------------- |
+| Push      | O(1)            |
+| Pop       | O(1)            |
+| Peek      | O(1)            |
+| isEmpty   | O(1)            |
 
-- **Storing Data**: Use `db.transactions.send_commit(data)` to store data on the blockchain
-- **Retrieving Data**: Use `db.transactions.retrieve(transaction_id)` to fetch transaction details
-- **Smart Contracts**: Coming soon!
+## Practice Problems
 
-## Features
+To master stacks, try these popular LeetCode problems:
 
-- Simple and intuitive API
-- Async support
-- Built-in transaction management
-- Smart contract integration
-- Comprehensive error handling
+1. [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+2. [Min Stack](https://leetcode.com/problems/min-stack/)
+3. [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
 
-## Documentation
+## Tips for Implementation
 
-For detailed documentation and examples, visit our [Python SDK Documentation](https://docs.resilientdb.com/python-sdk).
+1. Always check if the stack is empty before popping
+2. Consider edge cases in your implementation
+3. Think about size limits if using array implementation
+4. Remember that peek operation should not modify the stack
+
+Remember: Understanding stacks is crucial for both coding interviews and real-world applications. Take time to practice with the interactive playground above!

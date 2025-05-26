@@ -19,28 +19,16 @@ export const metadata = {
     default: 'CodeCraft - Get started with coding',
     template: '%s | CodeCraft',
   },
-  description:
-    'Get Started with your coding journey',
+  description: 'Get Started with your coding journey',
   metadataBase: new URL('https://resilientdb.com/'),
-  keywords: [
-    'ResilientDB',
-    'Blockchain',
-    'Database',
-    'Distributed Systems',
-    'Consensus',
-    'PBFT',
-    'Next.js',
-    'Mantine',
-    'Nextra',
-    'Documentation',
-  ],
+  keywords: ['CodeCraft', 'AI powered learning platform', 'Learning', 'Coding', 'Tutorial'],
   generator: 'Next.js',
-  applicationName: 'ResilientDB',
+  applicationName: 'CodeCraft',
   appleWebApp: {
-    title: 'ResilientDB',
+    title: 'CodeCraft',
   },
   openGraph: {
-    url: 'https://resilientdb.com/',
+    url: 'https://github.com/harish876/',
     siteName: 'ResilientDB',
     locale: 'en_US',
     type: 'website',
@@ -49,10 +37,10 @@ export const metadata = {
     'msapplication-TileColor': '#fff',
   },
   twitter: {
-    site: 'https://resilientdb.com/',
+    site: 'https://github.com/harish876/',
   },
   alternates: {
-    canonical: 'https://resilientdb.com/',
+    canonical: 'https://github.com/harish876/',
   },
 };
 
@@ -63,7 +51,7 @@ export default async function RootLayout({ children }: { children: any }) {
     <html lang="en" dir="ltr" {...mantineHtmlProps}>
       <Head>
         <ColorSchemeScript nonce="8IBTHwOdqNKAWeKl7plt8g==" defaultColorScheme="dark" />
-        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/logo.png" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
@@ -74,10 +62,14 @@ export default async function RootLayout({ children }: { children: any }) {
           <Layout
             banner={
               <Banner storageKey="mantine-nextjs-nextra">
-                ✨ Get started on your Coding Journey 
+                ✨ Get started on your Coding Journey
               </Banner>
             }
-            navbar={<MantineNavBar />}
+            navbar={
+            <div>
+              <MantineNavBar />
+            </div>
+          }
             pageMap={pageMap}
             docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
             sidebar={{ defaultMenuCollapseLevel: 1 }}
