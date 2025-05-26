@@ -65,11 +65,7 @@ export default async function RootLayout({ children }: { children: any }) {
                 ✨ Get started on your Coding Journey
               </Banner>
             }
-            navbar={
-            <div>
-              <MantineNavBar />
-            </div>
-          }
+            navbar={<MantineNavBar/>}
             pageMap={pageMap}
             docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
             sidebar={{ defaultMenuCollapseLevel: 1 }}
