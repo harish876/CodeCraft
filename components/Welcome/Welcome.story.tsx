@@ -1,7 +1,7 @@
-import { Welcome } from './Welcome';
+import { LandingPage } from './Welcome';
 
 export default {
   title: 'Welcome',
 };
 
-export const Usage = () => <Welcome />;
+export const Usage = () => <LandingPage />;
