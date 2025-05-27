@@ -13,6 +13,7 @@ import { getPageMap } from 'nextra/page-map';
 import { theme } from '../theme';
 
 import './global.css';
+import { FloatingAssistant } from '../components/FloatingAssistant';
 
 export const metadata = {
   title: {
@@ -72,6 +73,7 @@ export default async function RootLayout({ children }: { children: any }) {
           >
             {children}
           </Layout>
+          <FloatingAssistant />
         </MantineProvider>
       </body>
     </html>

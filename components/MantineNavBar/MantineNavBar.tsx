@@ -1,7 +1,7 @@
 'use client';
 
 import { IconHammer } from '@tabler/icons-react';
-import { Badge, Box,Group, Text } from '@mantine/core';
+import { Anchor, Badge, Box,Group, Text } from '@mantine/core';
 
 import '@mantine/core/styles.css';
 
@@ -40,7 +40,7 @@ export const MantineNavBar = () => {
                 <IconHammer size={20} />
               </Box>
               <Text size="xl" fw={700} c="light">
-                <Link href="/"> CodeCraft </Link>
+                CodeCraft
               </Text>
               <Badge variant="light" color="orange" size="sm">
                 Under Construction
