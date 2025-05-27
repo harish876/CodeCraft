@@ -2,7 +2,7 @@
 
 import { ActionIcon, Tooltip, Paper, Text, Group, Box, Modal, Textarea, Button, Stack, Divider, Avatar } from '@mantine/core';
 import { IconBrain, IconSend, IconRobot, IconUser } from '@tabler/icons-react';
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect, ReactNode, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -26,16 +26,64 @@ export function FloatingAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [question, setQuestion] = useState('');
   const [isAskingQuestion, setIsAskingQuestion] = useState(false);
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [lastSelection, setLastSelection] = useState('');
 
-  // Function to handle text selection
-  const handleTextSelection = () => {
-    const selection = window.getSelection();
-    if (selection && selection.toString().trim()) {
-      setSelectedText(selection.toString().trim());
-      setIsOpen(true);
-      getExplanation(selection.toString().trim());
+  // Function to check if element is within a code editor
+  const isWithinCodeEditor = (element: Element | null): boolean => {
+    if (!element) return false;
+    
+    // Check if element is within a code editor
+    if (element.closest('.cm-editor') || 
+        element.closest('.CodeMirror') || 
+        element.closest('pre') || 
+        element.closest('code')) {
+      return true;
     }
+    
+    // Check parent elements
+    return isWithinCodeEditor(element.parentElement);
   };
+
+  // Debounced text selection handler
+  const handleTextSelection = useCallback(() => {
+    // Clear any existing timer
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
+    // Set new timer
+    const timer = setTimeout(() => {
+      const selection = window.getSelection();
+      const selectedText = selection?.toString().trim() || '';
+      
+      // Don't trigger if:
+      // 1. No text is selected
+      // 2. Selection is within a code editor
+      // 3. Selection is the same as last time
+      if (!selectedText || 
+          isWithinCodeEditor(selection?.anchorNode?.parentElement as Element | null) ||
+          selectedText === lastSelection) {
+        return;
+      }
+
+      setLastSelection(selectedText);
+      setSelectedText(selectedText);
+      setIsOpen(true);
+      getExplanation(selectedText);
+    }, 300); // 300ms debounce delay
+
+    setDebounceTimer(timer);
+  }, [debounceTimer, lastSelection]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [debounceTimer]);
 
   // Add event listener for text selection
   useEffect(() => {
@@ -43,7 +91,16 @@ export function FloatingAssistant() {
     return () => {
       document.removeEventListener('mouseup', handleTextSelection);
     };
-  }, []);
+  }, [handleTextSelection]);
+
+  // Reset lastSelection when modal is closed
+  const handleModalClose = () => {
+    setIsOpen(false);
+    setSelectedText('');
+    setExplanation('');
+    setQuestion('');
+    setLastSelection('');
+  };
 
   const getExplanation = async (text: string, customQuestion?: string) => {
     setIsLoading(true);
@@ -127,12 +184,7 @@ Please:
 
       <Modal
         opened={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-          setSelectedText('');
-          setExplanation('');
-          setQuestion('');
-        }}
+        onClose={handleModalClose}
         size="60vw"
         styles={{
           content: {
