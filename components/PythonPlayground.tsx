@@ -8,7 +8,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { Box, Button, Group, Paper, Select, Stack, Text, Tooltip, Textarea, ActionIcon, Modal } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 declare global {
   interface Window {
@@ -23,27 +23,6 @@ interface Template {
   code: string;
 }
 
-const EXAMPLE_TEMPLATES = [
-  {
-    value: 'default',
-    label: 'Code your own stack',
-    code: `
-      """
-        Instructions
-      """
-    `,
-  },
-  {
-    value: 'stack',
-    label: 'Stack Data Structure',
-    code: `
-      """
-        Solution
-      """
-`,
-  },
-];
-
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -56,6 +35,27 @@ interface CodeProps {
   children?: React.ReactNode;
   [key: string]: any;
 }
+
+const EXAMPLE_TEMPLATES = [
+  {
+    value: 'default',
+    label: 'Instructions',
+    code: `
+      """
+        Instructions
+      """
+    `,
+  },
+  {
+    value: 'solution',
+    label: 'Solution',
+    code: `
+      """
+        Solution
+      """
+`,
+  },
+];
 
 export function PythonPlayground({ templates }: { templates?: Template[] }) {
   const codeTemplates = templates && Array.isArray(templates) ? templates : EXAMPLE_TEMPLATES;
@@ -97,16 +97,12 @@ export function PythonPlayground({ templates }: { templates?: Template[] }) {
       if (!reader) throw new Error('No reader available');
 
       let assistantMessage = '';
-      const decoder = new TextDecoder();
-      
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         
-        const text = decoder.decode(value, { stream: true });
+        const text = new TextDecoder().decode(value);
         assistantMessage += text;
-        
-        // Update messages with the accumulated text
         setMessages(prev => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
