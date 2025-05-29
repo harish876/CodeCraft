@@ -4,7 +4,7 @@ import { ActionIcon, Tooltip, Paper, Text, Group, Box, Modal, Textarea, Button, 
 import { IconBrain, IconSend, IconRobot, IconUser } from '@tabler/icons-react';
 import { useState, useEffect, ReactNode, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface CodeProps {
@@ -362,7 +362,7 @@ Please:
                     ? "Ask a specific question about the selected text..." 
                     : "Ask any question..."}
                   value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setQuestion(e.target.value)}
                   style={{ flex: 1 }}
                   disabled={isLoading}
                   autosize

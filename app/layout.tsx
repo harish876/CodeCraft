@@ -53,6 +53,7 @@ export default async function RootLayout({ children }: { children: any }) {
       <Head>
         <ColorSchemeScript nonce="8IBTHwOdqNKAWeKl7plt8g==" defaultColorScheme="dark" />
         <link rel="shortcut icon" href="/logo.png" />
+        <link rel="stylesheet" href="https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.css" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
@@ -76,6 +77,7 @@ export default async function RootLayout({ children }: { children: any }) {
           <FloatingAssistant />
         </MantineProvider>
       </body>
+      <script src="https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.js"></script>
     </html>
   );
 }
