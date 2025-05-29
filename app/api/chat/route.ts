@@ -69,13 +69,18 @@ Follow these guidelines:
               if (data === '[DONE]') continue;
 
               try {
-                const parsed = JSON.parse(data);
-                const content = parsed.choices[0]?.delta?.content || '';
-                if (content) {
-                  controller.enqueue(encoder.encode(content));
+                // Ensure the data is complete JSON before parsing
+                if (data.trim()) {
+                  const parsed = JSON.parse(data);
+                  const content = parsed.choices[0]?.delta?.content || '';
+                  if (content) {
+                    controller.enqueue(encoder.encode(content));
+                  }
                 }
               } catch (e) {
                 console.error('Error parsing JSON:', e);
+                // Continue processing other lines even if one fails
+                continue;
               }
             }
           }

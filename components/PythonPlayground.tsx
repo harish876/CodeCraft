@@ -97,12 +97,16 @@ export function PythonPlayground({ templates }: { templates?: Template[] }) {
       if (!reader) throw new Error('No reader available');
 
       let assistantMessage = '';
+      const decoder = new TextDecoder();
+      
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         
-        const text = new TextDecoder().decode(value);
+        const text = decoder.decode(value, { stream: true });
         assistantMessage += text;
+        
+        // Update messages with the accumulated text
         setMessages(prev => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
