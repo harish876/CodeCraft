@@ -18,12 +18,5 @@ export default {
   '###': {
     type: 'separator',
     title: 'Algorithms', // Title is optional
-  },
-  'release-notes': {
-    title: 'Release Notes',
-    theme: {
-      toc: false,
-      layout: 'full',
-    },
-  },
+  }
 };
