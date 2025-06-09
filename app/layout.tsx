@@ -6,6 +6,7 @@ import '@gfazioli/mantine-text-animate/styles.layer.css';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.layer.css';
+import '@mantine/notifications/styles.css';
 
 import { Layout } from 'nextra-theme-docs';
 import { Banner, Head } from 'nextra/components';
@@ -14,6 +15,8 @@ import { theme } from '../theme';
 
 import './global.css';
 import { FloatingAssistant } from '../components/FloatingAssistant';
+import { Notifications } from '@mantine/notifications';
+import { Sidebar } from '@/components/Sidebar/Sidebar';
 
 export const metadata = {
   title: {
@@ -47,7 +50,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: any }) {
   const pageMap = await getPageMap();
-
+  //TODO: Fight with the layout to make context width wider
   return (
     <html lang="en" dir="ltr" {...mantineHtmlProps}>
       <Head>
@@ -61,6 +64,7 @@ export default async function RootLayout({ children }: { children: any }) {
       </Head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
+          <Notifications position="top-right" />
           <Layout
             banner={
               <Banner storageKey="mantine-nextjs-nextra">
@@ -69,15 +73,14 @@ export default async function RootLayout({ children }: { children: any }) {
             }
             navbar={<MantineNavBar/>}
             pageMap={pageMap}
-            docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
-            sidebar={{ defaultMenuCollapseLevel: 1 }}
+            docsRepositoryBase="https://github.com/harish876/codecraft"
+            sidebar={{ defaultMenuCollapseLevel: 1}}
           >
             {children}
           </Layout>
           <FloatingAssistant />
         </MantineProvider>
       </body>
-      <script src="https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.js"></script>
     </html>
   );
 }

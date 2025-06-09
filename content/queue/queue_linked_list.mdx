@@ -1,0 +1,83 @@
+import { PythonPlayground } from '@/components/PythonPlayground';
+import { CodePlayground } from '@/components/CodePlayground';
+import { QUEUE_LINKED_LIST_TEMPLATES } from '../../app/lib/constants';
+
+# Queue Implementation using Linked List
+
+## Why Linked List?
+After understanding the array-based implementation of queues, we can see that linked lists offer several advantages:
+
+1. **Dynamic Size**: No need to worry about fixed capacity or resizing
+2. **Memory Efficiency**: Only allocate memory for elements that are actually in the queue
+3. **No Memory Wastage**: Unlike arrays, we don't have unused space at the front
+4. **No Resizing Overhead**: No need to copy elements when resizing
+
+## Key Components
+
+- **Node**: Each element in the queue is stored in a node containing:
+  - Data: The actual value
+  - Next: Reference to the next node
+- **Front Pointer**: Points to the first node (for dequeue operations)
+- **Rear Pointer**: Points to the last node (for enqueue operations)
+
+## Key Operations
+
+- **Enqueue**: Add a new node at the rear
+- **Dequeue**: Remove the node at the front
+- **Front/Peek**: View the front node's data
+- **isEmpty**: Check if front pointer is null
+- **Size**: Keep track of number of nodes
+
+## Brief Introduction
+
+To understand queues better, watch this concise explanation:
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/F8AbOfQwl1c?si=Qg3n1nCow-vH7mnJ" 
+  title="Queue Data Structure - Linked List Implementation"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+## Visual Representation
+
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', marginBottom: '24px' }}>
+  <img 
+    src="https://cdn.programiz.com/sites/tutorial2program/files/linked-list-concept.png"
+    alt="Linked List Concept" 
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+## Interactive Playground
+
+Try implementing a queue using a linked list! The playground below provides a template where you can code your own implementation. Please close the sidebar by clicking on the sidebar close icon to have a nicer coding experience.
+
+<CodePlayground templates={QUEUE_LINKED_LIST_TEMPLATES} />
+
+## Time Complexity
+
+| Operation | Time Complexity |
+| --------- | --------------- |
+| Enqueue   | O(1)            |
+| Dequeue   | O(1)            |
+| Front     | O(1)            |
+| isEmpty   | O(1)            |
+| Size      | O(1)            |
+
+## Memory Management
+
+1. **Allocation**: New nodes are created during enqueue
+2. **Deallocation**: Nodes are removed during dequeue
+3. **Memory Leaks**: Always properly delete nodes in C++
+4. **Garbage Collection**: Handled automatically in Python/JavaScript
+
+## Conclusion
+
+In this section, we learned how to implement a queue using a singly linked list. We also learned about the time complexity of the operations and the memory management of the linked list. There are other types of queues like a circular queue, priority queue, double ended queue etc. which we will learn in future sections.
+
+
+

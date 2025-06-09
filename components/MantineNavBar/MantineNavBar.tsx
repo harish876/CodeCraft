@@ -1,21 +1,14 @@
 'use client';
 
 import { IconHammer } from '@tabler/icons-react';
-import { Anchor, Badge, Box,Group, Text } from '@mantine/core';
+import { Badge, Box,Group, Text } from '@mantine/core';
 
 import '@mantine/core/styles.css';
 
 import { Navbar } from 'nextra-theme-docs';
-import Link from 'next/link';
 import { MantineNextraThemeObserver } from '../MantineNextraThemeObserver/MantineNextraThemeObserver';
 
-/**
- * You can customize the Nextra NavBar component.
- * Don't forget to use the MantineProvider and MantineNextraThemeObserver components.
- *
- * @since 1.0.0
- *
- */
+
 export const MantineNavBar = () => {
   return (
     <>

@@ -1,11 +1,14 @@
 import { PythonPlayground } from '@/components/PythonPlayground';
+import { CodePlayground } from '@/components/CodePlayground';
 import { STACK_CODE_TEMPLATES } from '../app/lib/constants';
 
 # Stack Data Structure
 
 ## What is a Stack?
+A stack is a fundamental data structure that follows the Last-In-First-Out (LIFO) principle. Think of it like a stack of plates - you can only add or remove plates from the top. The last plate you put on (push) will be the first one you take off (pop). Stacks are fundamental in Computer Science as lot of concepts releated to compilers and program execution deal with stack memory. So this is essential to building a solid foundation when it comes to thinking about memory as well.
 
-A stack is a fundamental data structure that follows the Last-In-First-Out (LIFO) principle. Think of it like a stack of plates - you can only add or remove plates from the top. The last plate you put on (push) will be the first one you take off (pop).
+## Overview
+Stack is a Abstract Data Type (ADT). So stacks can be implemented using arrays, linked lists etc. The idea here is to understand the concept of stack and then provide a way to implement one using arrays. Once you grasp the concept, you can choose to implement it using linked lists or queues.
 
 ## Key Operations
 
@@ -16,7 +19,7 @@ A stack is a fundamental data structure that follows the Last-In-First-Out (LIFO
 
 ## Brief Introduction
 
-To get a deep understanding of stacks, watch this excellent short video:
+To get a brief understanding of stacks, watch this excellent short video:
 
 <iframe
   width="100%"
@@ -28,19 +31,30 @@ To get a deep understanding of stacks, watch this excellent short video:
   allowFullScreen
 ></iframe>
 
-## Common Use Cases
 
-1. **Function Call Stack**: Managing function calls and their local variables
-2. **Undo/Redo Operations**: Tracking history of actions in applications
-3. **Browser History**: Managing back/forward navigation
-4. **Expression Evaluation**: Parsing and evaluating mathematical expressions
-5. **Valid Parentheses**: Checking for balanced brackets in code
+## Working of Stack
+The operations work as follows:
+
+ - A pointer called TOP is used to keep track of the top element in the stack.
+ - When initializing the stack, we set its value to -1 so that we can check if the stack is empty by comparing TOP == -1.
+ - On pushing an element, we increase the value of TOP and place the new element in the position pointed to by TOP.
+ - On popping an element, we return the element pointed to by TOP and reduce its value.
+ - Before pushing, we check if the stack is already full
+ - Before popping, we check if the stack is already empty
+
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', marginBottom: '24px' }}>
+  <img 
+    src="https://cdn.programiz.com/sites/tutorial2program/files/stack-operations.png" 
+    alt="Stack Operations Visualization" 
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
 
 ## Interactive Playground
 
-Try implementing a stack in Python! The playground below provides a template where you can code your own stack implementation. You'll learn by doing!
+Try implementing a stack in Python! The playground below provides a template where you can code your own stack implementation. You'll learn by doing! Please close the sidebar by clicking on the sidebar close icon to have a nicer coding experience. 
 
-<PythonPlayground templates={STACK_CODE_TEMPLATES} />
+<CodePlayground templates={STACK_CODE_TEMPLATES} />
 
 ## Time Complexity
 
@@ -51,13 +65,6 @@ Try implementing a stack in Python! The playground below provides a template whe
 | Peek      | O(1)            |
 | isEmpty   | O(1)            |
 
-## Practice Problems
-
-To master stacks, try these popular LeetCode problems:
-
-1. [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
-2. [Min Stack](https://leetcode.com/problems/min-stack/)
-3. [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
 
 ## Tips for Implementation
 
@@ -67,3 +74,11 @@ To master stacks, try these popular LeetCode problems:
 4. Remember that peek operation should not modify the stack
 
 Remember: Understanding stacks is crucial for both coding interviews and real-world applications. Take time to practice with the interactive playground above!
+
+## Common Use Cases
+
+1. **Function Call Stack**: Managing function calls and their local variables
+2. **Undo/Redo Operations**: Tracking history of actions in applications
+3. **Browser History**: Managing back/forward navigation
+4. **Expression Evaluation**: Parsing and evaluating mathematical expressions
+5. **Valid Parentheses**: Checking for balanced brackets in code

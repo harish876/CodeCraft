@@ -11,6 +11,7 @@
 @layer overwrite {
   :root {
     --x-color-nextra-bg: var(--mantine-color-body);
+    --nextra-content-width: 1200px; /* Configure content width */
   }
 
   :where(.dark) {
@@ -21,6 +22,12 @@
     font-size: var(--x-text-sm) !important;
     line-height: var(--tw-leading, var(--x-text-sm--line-height)) !important;
   }
+
+  /* Override mx-auto class */
+  /* .x\:mx-auto {
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+  } */
 }
 
 @layer components, mantine, nextra, overwrite;

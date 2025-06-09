@@ -1,30 +1,39 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { python } from '@codemirror/lang-python';
 import { IconPlayerPlay, IconTemplate, IconTrash, IconMessage, IconPlayerStop, IconMaximize, IconMinimize } from '@tabler/icons-react';
-import { vscodeDark } from '@uiw/codemirror-theme-vscode';
-import CodeMirror from '@uiw/react-codemirror';
 import { Box, Button, Group, Paper, Select, Stack, Text, Tooltip, Textarea, ActionIcon, Modal } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import dynamic from 'next/dynamic';
 
-declare global {
-  interface Window {
-    loadPyodide: (options: { indexURL: string }) => Promise<any>;
-    pyodide: any;
-  }
-}
+const CodeEditor = dynamic(() => import('./CodeEditor').then(mod => mod.CodeEditor), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[400px] bg-gray-900 rounded-lg flex items-center justify-center">
+      <Text c="dimmed">Loading editor...</Text>
+    </div>
+  ),
+});
+
+// Judge0 language IDs
+const LANGUAGES = [
+  { id: 71, name: 'Python (3.8.1)', value: 'python' as LanguageValue },
+  { id: 75, name: 'C (Clang 7.0.1)', value: 'c' as LanguageValue },
+  { id: 54, name: 'C++ (GCC 9.2.0)', value: 'cpp' as LanguageValue },
+  // { id: 63, name: 'JavaScript (Node.js 12.14.0)', value: 'javascript' as LanguageValue },
+].map(lang => ({
+  ...lang,
+  label: lang.name,
+}));
+
+type LanguageValue = 'python' | 'cpp' | 'c' | 'javascript';
 
 interface Template {
   value: string;
   label: string;
-  code: {
-    python: string;
-    cpp: string;
-    javascript: string;
-  };
+  code: Record<LanguageValue, string>;
 }
 
 interface Message {
@@ -45,35 +54,35 @@ const EXAMPLE_TEMPLATES: Template[] = [
     value: 'default',
     label: 'Instructions',
     code: {
-      python: `
-      """
-        Instructions
-      """
-    `,
-      cpp: '',
-      javascript: ''
+      python: `# Write your Python code here`,
+      cpp: `// Write your C++ code here`,
+      c: `// Write your C code here`,
+      javascript: `// Write your JavaScript code here`
     }
   },
   {
     value: 'solution',
     label: 'Solution',
     code: {
-      python: `
-      """
-        Solution
-      """
-    `,
-      cpp: '',
-      javascript: ''
+      python: `# Solution template`,
+      cpp: `// Solution template`,
+      c: `// Solution template`,
+      javascript: `// Solution template`
     }
   },
 ];
 
-export function PythonPlayground({ templates }: { templates?: Template[] }) {
+export function CodePlayground({ templates }: { templates?: Template[] }) {
   const codeTemplates = templates && Array.isArray(templates) ? templates : EXAMPLE_TEMPLATES;
-  const [code, setCode] = useState<string>(codeTemplates[0].code.python);
-  const [output, setOutput] = useState<string[]>(['Initializing Python environment...']);
-  const [isLoading, setIsLoading] = useState(true);
+  const [codeByLanguage, setCodeByLanguage] = useState<Record<LanguageValue, string>>({
+    python: codeTemplates[0].code.python,
+    cpp: codeTemplates[0].code.cpp,
+    c: codeTemplates[0].code.c,
+    javascript: codeTemplates[0].code.javascript,
+  });
+  const [code, setCode] = useState<string>(codeTemplates[0].code[LANGUAGES[0].value as LanguageValue]);
+  const [output, setOutput] = useState<string[]>(['Select a language to start coding...']);
+  const [isLoading, setIsLoading] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -81,6 +90,19 @@ export function PythonPlayground({ templates }: { templates?: Template[] }) {
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [abortController, setAbortController] = useState<AbortController | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    setCodeByLanguage(prev => ({
+      ...prev,
+      [selectedLanguage.value]: code
+    }));
+  }, [code, selectedLanguage.value]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +113,6 @@ export function PythonPlayground({ templates }: { templates?: Template[] }) {
     setInput('');
     setIsAiLoading(true);
 
-    // Create new AbortController for this request
     const controller = new AbortController();
     setAbortController(controller);
 
@@ -155,102 +176,111 @@ export function PythonPlayground({ templates }: { templates?: Template[] }) {
     }
   };
 
-  useEffect(() => {
-    const initPython = async () => {
-      try {
-        if (window.pyodide) {
-          setOutput(['✅ Python environment ready']);
-          setIsLoading(false);
-          return;
-        }
-
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
-        document.head.appendChild(script);
-
-        await new Promise((resolve) => {
-          script.onload = resolve;
-        });
-
-        const pyodide = await window.loadPyodide({
-          indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/',
-        });
-
-        await pyodide.runPythonAsync(`
-          import sys
-          from io import StringIO
-          sys.stdout = StringIO()
-          sys.stderr = StringIO()
-        `);
-
-        window.pyodide = pyodide;
-        setOutput(['✅ Python environment ready']);
-        setIsLoading(false);
-      } catch (error) {
-        setOutput((prev) => [
-          ...prev,
-          `❌ Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        ]);
-        setIsLoading(false);
+  const safeBase64Decode = (str: string): string => {
+    try {
+      // Check if the string is valid base64
+      if (!/^[A-Za-z0-9+/=]+$/.test(str)) {
+        return str; // Return original string if not valid base64
       }
-    };
-
-    initPython();
-  }, []);
+      return atob(str);
+    } catch (error) {
+      console.error('Base64 decode error:', error);
+      return str; // Return original string if decode fails
+    }
+  };
 
   const runCode = async () => {
-    if (isLoading || isRunning) {
-      return;
-    }
+    if (!isMounted || isLoading || isRunning) return;
     setIsRunning(true);
     setOutput(['▶ Running code...']);
 
     try {
-      // Wrap code in async function if it uses await
-      const codeToRun = /\bawait\b/.test(code)
-        ? `
-async def __run():
-${code
-  .split('\n')
-  .map((line: string) => `    ${line}`)
-  .join('\n')}
+      // Create submission with proper base64 encoding
+      const createResponse = await fetch('https://codesandboxapi.resilientdb.com/submissions?base64_encoded=true&wait=false&fields=*', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY || '',
+          'x-rapidapi-host': 'judge0-ce.p.rapidapi.com'
+        },
+        body: JSON.stringify({
+          language_id: selectedLanguage.id,
+          source_code: btoa(code), // Simple base64 encoding
+          base64_encoded: true
+        }),
+      });
 
-import asyncio
-loop = asyncio.get_event_loop()
-loop.run_until_complete(__run())
-`
-        : code;
+      const { token } = await createResponse.json();
 
-      // Run the code and capture output
-      await window.pyodide.runPythonAsync(codeToRun);
+      // Poll for results
+      let result;
+      do {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        const getResponse = await fetch(
+          `https://codesandboxapi.resilientdb.com/submissions/${token}?base64_encoded=true&fields=*`,
+          {
+            headers: {
+              'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY || '',
+              'x-rapidapi-host': 'judge0-ce.p.rapidapi.com'
+            },
+          }
+        );
+        result = await getResponse.json();
+      } while (result.status.id <= 2);
 
-      // Get output
-      const stdout = await window.pyodide.runPythonAsync('sys.stdout.getvalue()');
-      if (stdout) {
-        setOutput((prev) => [...prev, stdout]);
+      // Get output with simple base64 decoding
+      if (result.stdout) {
+        setOutput(prev => [...prev, atob(result.stdout)]);
+      }
+      if (result.stderr) {
+        setOutput(prev => [...prev, `Error: ${atob(result.stderr)}`]);
+      }
+      if (result.compile_output) {
+        setOutput(prev => [...prev, `Compilation: ${atob(result.compile_output)}`]);
       }
 
-      setOutput((prev) => [...prev, '✅ Code execution completed']);
+      setOutput(prev => [...prev, '✅ Code execution completed']);
     } catch (error: any) {
-      setOutput((prev) => [...prev, `❌ Error: ${error.message}`]);
+      setOutput(prev => [...prev, `❌ Error: ${error.message}`]);
     } finally {
-      // Clear buffers
-      await window.pyodide.runPythonAsync('sys.stdout.truncate(0)\nsys.stdout.seek(0)');
       setIsRunning(false);
     }
   };
 
   const clearOutput = () => setOutput([]);
+  const clearConversation = () => setMessages([]);
 
-  const clearConversation = () => {
-    setMessages([]);
-  };
+  if (!isMounted) {
+    return (
+      <Paper withBorder p="md" radius="md">
+        <Stack>
+          <Box className="h-[400px] bg-gray-900 rounded-lg flex items-center justify-center">
+            <Text c="dimmed">Loading playground...</Text>
+          </Box>
+        </Stack>
+      </Paper>
+    );
+  }
 
   return (
     <Paper withBorder p="md" radius="md">
       <Stack>
         <Group justify="space-between" align="center">
           <Group>
+            <Select
+              size="xs"
+              placeholder="Select language"
+              data={LANGUAGES}
+              value={selectedLanguage.value}
+              onChange={(value) => {
+                const lang = LANGUAGES.find(l => l.value === value);
+                if (lang) {
+                  setSelectedLanguage(lang);
+                  setCode(codeByLanguage[lang.value as LanguageValue]);
+                  setOutput(['Select a language to start coding...']);
+                }
+              }}
+            />
             <Tooltip label="Load example">
               <Select
                 size="xs"
@@ -260,7 +290,7 @@ loop.run_until_complete(__run())
                   if (value) {
                     const template = codeTemplates.find((t) => t.value === value);
                     if (template) {
-                      setCode(template.code.python);
+                      setCode(template.code[selectedLanguage.value as LanguageValue]);
                     }
                   }
                 }}
@@ -280,39 +310,11 @@ loop.run_until_complete(__run())
         </Group>
 
         <Box>
-          <CodeMirror
+          <CodeEditor
             value={code}
-            height="400px"
-            theme={vscodeDark}
-            extensions={[python()]}
             onChange={setCode}
             editable={!isLoading}
-            basicSetup={{
-              lineNumbers: true,
-              highlightActiveLineGutter: true,
-              highlightSpecialChars: true,
-              history: true,
-              foldGutter: true,
-              drawSelection: true,
-              dropCursor: true,
-              allowMultipleSelections: true,
-              indentOnInput: true,
-              syntaxHighlighting: true,
-              bracketMatching: true,
-              closeBrackets: true,
-              autocompletion: true,
-              rectangularSelection: true,
-              crosshairCursor: true,
-              highlightActiveLine: true,
-              highlightSelectionMatches: true,
-              closeBracketsKeymap: true,
-              defaultKeymap: true,
-              searchKeymap: true,
-              historyKeymap: true,
-              foldKeymap: true,
-              completionKeymap: true,
-              lintKeymap: true,
-            }}
+            language={selectedLanguage.value}
           />
         </Box>
 
@@ -560,4 +562,4 @@ loop.run_until_complete(__run())
       </Stack>
     </Paper>
   );
-}
+} 

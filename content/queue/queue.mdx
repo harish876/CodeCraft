@@ -1,0 +1,92 @@
+import { PythonPlayground } from '@/components/PythonPlayground';
+import { CodePlayground } from '@/components/CodePlayground';
+import { QUEUE_CODE_TEMPLATES } from '../../app/lib/constants';
+
+# Queue Data Structure
+
+## What is a Queue?
+A queue is a fundamental data structure that follows the First-In-First-Out (FIFO) principle. Think of it like a queue of people - the first person to join the queue will be the first one to leave. Queues are a very important data structure in Computer Science as it is a container to hold data. Depending on the type of data you have a queue can look like an array, linked list, doubly linked list etc.
+
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', marginBottom: '24px' }}>
+  <img 
+    src="https://cdn.programiz.com/sites/tutorial2program/files/simple-queue_0.png"
+    alt="Queue Operations Visualization" 
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+## Overview
+Queue is an Abstract Data Type (ADT) that follows the First-In-First-Out (FIFO) principle.While queues can be implemented using arrays or linked lists, we'll start with array implementation to understand the core concepts. Later, we'll explore why linked lists might be a better choice for certain scenarios.
+
+
+## Key Operations
+
+- **Enqueue**: Add an element to the rear of the queue
+- **Dequeue**: Remove an element from the front of the queue
+- **Front/Peek**: View the front element without removing it
+- **isEmpty**: Check if the queue is empty
+- **isFull**: Check if the queue is full (for fixed-size array implementation)
+
+## Brief Introduction
+
+To understand queues better, watch this concise explanation:
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/D6gu-_tmEpQ?si=NoX_O_yg1LKIRqzd"
+  title="Queue Data Structure"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+## Array Implementation Challenges
+
+While arrays provide a simple way to implement queues, they come with some limitations:
+
+1. **Fixed Size**: Array-based queues have a fixed capacity
+2. **Memory Wastage**: As elements are dequeued, space at the front becomes unused
+3. **Circular Queue**: To overcome space wastage, we need to implement a circular queue
+4. **Resizing Overhead**: Dynamic resizing of arrays can be expensive
+
+This motivates the need for linked list implementation, which we'll explore in the next section.
+
+## Common Use Cases
+
+1. **Task Scheduling**: Managing processes in operating systems
+2. **Print Queue**: Handling print jobs in order
+3. **Message Queues**: Managing asynchronous communication
+4. **Breadth-First Search**: Traversing graphs level by level
+5. **Event Handling**: Processing events in the order they occur
+
+## Interactive Playground
+
+Try implementing a queue using arrays! The playground below provides a template where you can code your own queue implementation.  Please close the sidebar by clicking on the sidebar close icon to have a nicer coding experience. 
+
+<CodePlayground templates={QUEUE_CODE_TEMPLATES} />
+
+## Time Complexity
+
+| Operation | Time Complexity |
+| --------- | --------------- |
+| Enqueue   | O(1)            |
+| Dequeue   | O(1)            |
+| Front     | O(1)            |
+| isEmpty   | O(1)            |
+| isFull    | O(1)            |
+
+
+## Tips for Implementation
+
+1. Use two pointers (front and rear) to track queue boundaries
+2. Implement circular queue to reuse space efficiently
+3. Handle edge cases like empty and full conditions
+4. Consider using a dynamic array if size is unknown
+5. Remember that linked list implementation might be better for:
+   - Unknown queue size
+   - Frequent enqueue/dequeue operations
+   - Memory efficiency
+   - No need for resizing
+
+Remember: Understanding both array and linked list implementations of queues is crucial for making the right design choices in your applications!

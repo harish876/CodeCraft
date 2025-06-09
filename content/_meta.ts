@@ -6,8 +6,14 @@ export default {
     type: 'separator',
     title: 'Data Structures', // Title is optional
   },
-  stack: {
-    title: 'Stack',
+    stack: {
+      title: 'Stack',
+    },
+    queue: {
+        title: 'Queue',
+    },
+    milestone_1: {
+      title: '🎊 Milestone 1',
   },
   '###': {
     type: 'separator',

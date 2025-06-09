@@ -1,11 +1,12 @@
 'use client';
 
-import { ActionIcon, Tooltip, Paper, Text, Group, Box, Modal, Textarea, Button, Stack, Divider, Avatar } from '@mantine/core';
+import { ActionIcon, Tooltip, Paper, Text, Group, Box, Modal, Textarea, Button, Stack, Divider, Avatar, Switch } from '@mantine/core';
 import { IconBrain, IconSend, IconRobot, IconUser } from '@tabler/icons-react';
 import { useState, useEffect, ReactNode, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { notifications } from '@mantine/notifications';
 
 interface CodeProps {
   node?: any;
@@ -28,6 +29,7 @@ export function FloatingAssistant() {
   const [isAskingQuestion, setIsAskingQuestion] = useState(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   const [lastSelection, setLastSelection] = useState('');
+  const [isSelectionEnabled, setIsSelectionEnabled] = useState(false);
 
   // Function to check if element is within a code editor
   const isWithinCodeEditor = (element: Element | null): boolean => {
@@ -47,6 +49,8 @@ export function FloatingAssistant() {
 
   // Debounced text selection handler
   const handleTextSelection = useCallback(() => {
+    if (!isSelectionEnabled) return;
+
     // Clear any existing timer
     if (debounceTimer) {
       clearTimeout(debounceTimer);
@@ -74,7 +78,7 @@ export function FloatingAssistant() {
     }, 300); // 300ms debounce delay
 
     setDebounceTimer(timer);
-  }, [debounceTimer, lastSelection]);
+  }, [debounceTimer, lastSelection, isSelectionEnabled]);
 
   // Cleanup timer on unmount
   useEffect(() => {
@@ -161,6 +165,18 @@ Please:
     setQuestion('');
   };
 
+  const handleSelectionToggle = (checked: boolean) => {
+    setIsSelectionEnabled(checked);
+    notifications.show({
+      title: checked ? 'Selection Enabled' : 'Selection Disabled',
+      message: checked 
+        ? 'Any text selection will trigger the AI assistant. Toggle off when not needed.'
+        : 'Text selection feature is now disabled. Toggle on when you need it.',
+      color: checked ? 'blue' : 'gray',
+      autoClose: 3000,
+    });
+  };
+
   return (
     <>
       <Tooltip label="AI Assistant - Select text to get explanations or ask general questions">
@@ -212,6 +228,12 @@ Please:
                 <IconRobot size={20} />
               </Avatar>
               <Text size="sm" fw={500}>AI Assistant</Text>
+              <Switch
+                size="xs"
+                label="Enable Selection"
+                checked={isSelectionEnabled}
+                onChange={(event) => handleSelectionToggle(event.currentTarget.checked)}
+              />
             </Group>
             {selectedText && (
               <Text size="xs" c="dimmed" style={{ maxWidth: '70%' }}>
